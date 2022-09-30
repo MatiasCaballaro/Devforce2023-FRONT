@@ -58,7 +58,37 @@ export const TablaUsuarios = () => {
                     </tr>
                 </thead>
                 <tbody className="fs-7">
-                    {
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <p className='collapsed w-100'>
+
+                            </p>
+                        </td>
+                        <td>
+                            <div className='d-flex justify-content-center align-items-center'>
+                                <p className="text-muted m-0"></p>
+
+                                <i className="ms-2 fa-solid fa-clock"></i>
+
+
+                                <i className="ms-2 fa-solid fa-clock"></i>
+
+
+                                <i className="ms-2 fa-solid fa-pencil"></i>
+
+
+                                <i className="ms-2 fa-solid fa-check"></i>
+
+
+                                <i className="ms-2 fa-solid fa-xmark"></i>
+
+                            </div>
+                        </td>
+                        <td><i className="fa-solid fa-angle-down me-2"></i></td>
+                    </tr>
+                    {/* {
                         solicitudes.map(soli => (
                             <tr>
                                 <td>
@@ -92,7 +122,7 @@ export const TablaUsuarios = () => {
                                 <td><i onClick={() => expandRow(soli.id)} id={`s${soli.id}-expandIcon`} className="fa-solid fa-angle-down me-2"></i></td>
                             </tr>
                         ))
-                    }
+                    } */}
                 </tbody>
             </table >
         </>

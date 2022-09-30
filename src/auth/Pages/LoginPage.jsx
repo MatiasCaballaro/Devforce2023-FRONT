@@ -26,12 +26,14 @@ export const LoginPage = () => {
 		try {
 			const data = await
 				fetch('http://localhost:8080/api/auth/signin', {
+					mode: 'cors',
 					method: 'POST',
 					body: JSON.stringify({ username, password }),
 					headers: {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json',
-						'Cache': 'no-cache'
+						'Cache': 'no-cache',
+						'Access-Control-Allow-Origin': 'http://localhost:8080',
 					},
 					// credentials: 'include',
 				}).then(resp => resp.json())
@@ -44,12 +46,22 @@ export const LoginPage = () => {
 			// 		// withCredentials: true
 			// 	})
 			// const { data } = resp
-			console.log(data);
+
+			var rol = "ROLE_USUARIO"
+
+			data.contenido.authorities.forEach(rolB => {
+				if (rolB.authority == "ROLE_MENTOR") {
+					rol = "ROLE_MENTOR"
+				}
+				if (rolB.authority == "ROLE_ADMIN") {
+					rol = "ROLE_ADMIN"
+				}
+			})
 
 			let dataarmada = {
 				statusLog: data.ok,
 				contenido: data.contenido,
-				rolA: data.contenido.authorities[0].authority
+				rolA: rol,
 			}
 			setstatus(status => ({
 				...status,
