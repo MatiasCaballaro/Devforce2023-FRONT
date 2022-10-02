@@ -20,7 +20,15 @@ export const TablaUsuarios = () => {
                 // const { data } = resp
                 // console.log(data);
                 fetch('http://localhost:8080/api/solicitudesusuario', {
+                    mode: 'cors',
                     method: "GET",
+                    headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json',
+						'Cache': 'no-cache',
+						'Access-Control-Allow-Origin': 'http://localhost:8080',
+					},
+					credentials: 'include',
                 })
                     .then(resp => resp.json())
             setSolicitudes(data)

@@ -35,7 +35,7 @@ export const LoginPage = () => {
 						'Cache': 'no-cache',
 						'Access-Control-Allow-Origin': 'http://localhost:8080',
 					},
-					// credentials: 'include',
+					credentials: 'include',
 				}).then(resp => resp.json())
 
 			// 	axios.post('http://localhost:8080/api/auth/signin', { username, password }, {
