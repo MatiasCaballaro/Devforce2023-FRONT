@@ -32,50 +32,44 @@ export const CrearUsuario = () => {
 
   const hideOrShowInput = () => {
     var valorSeleccionado = document.getElementById("tipo-selector").value;
-    setRole(valorSeleccionado)
+    var linkArea = document.getElementById("link-area");
+    if (valorSeleccionado == "mentor") {
+      linkArea.classList.remove("hide");
+    }
+    else {
+      document.getElementById("link").required = false
+      linkArea.classList.add("hide");
+    }
   }
 
-  // const sendUsuario = async () => {
-  //   const tipo = document.getElementById("tipo-selector").value;
-  //   const area = document.getElementById("area-selector").value;
-  //   const data = { tipo, descripcion, estado: 'PENDIENTE-MENTOR', area, ...(link != '' && { link }) }
-  //   fetch('http://localhost:8080/api/nuevaSolicitud', {
-  //     method: 'POST',
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Cache': 'no-cache'
-  //     },
-  //     credentials: 'include',
-  //   }).then(resp => resp.json())
-  //   console.log(data);
-  // }
-
-//   const apiFetch=async (accion,soli,numeroDias) => {
-//     try {
-//         let ruta;
-//         if (accion=="Rechazar") { ruta="rechazarSolicitudPlataforma" }
-//         if (accion=="Devolver") { ruta="devolverSolicitudPlataforma" }
-//         const data=await
-//             fetch(`http://localhost:8080/api/mentor/${ruta}`,{
-//                 mode: 'cors',
-//                 method: "PUT",
-//                 body: JSON.stringify(soli),
-//                 headers: {
-//                     'Accept': 'application/json',
-//                     'Content-Type': 'application/json',
-//                     'Cache': 'no-cache',
-//                     'Access-Control-Allow-Origin': 'http://localhost:8080',
-//                 },
-//                 credentials: 'include',
-//             })
-//                 .then(resp => resp.json())
-//         setUpdateSolis(data)
-//     } catch (error) {
-//         console.log({ error });
-//     }
-// }
+  const sendUsuario = async () => {
+    var tipo = document.getElementById("tipo-selector").value;
+    var area = document.getElementById("area-selector").value;
+    var nombre = document.getElementById("nombre").value;
+    var apellido = document.getElementById("apellido").value;
+    var username = document.getElementById("username").value;
+    var phoneNumber = document.getElementById("phone").value;
+    var mail = document.getElementById("mail").value;
+    var password = document.getElementById("password1").value;
+    if(document.getElementById("flexSwitchCheckDefault").checked == true){
+      var hasTeams = true;
+    }
+    else{
+      var hasTeams = false;
+    }
+    var data = { tipo, area, nombre, apellido, username, phoneNumber, mail, password, hasTeams}
+    fetch('http://localhost:8080/api/admin/registrarUsuario', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Cache': 'no-cache'
+      },
+      credentials: 'include',
+    }).then(resp => resp.json())
+    console.log(data);
+  }
 
   const onClickBTN = () => {
      if (document.querySelector("input")) {
@@ -94,37 +88,49 @@ export const CrearUsuario = () => {
           <form onSubmit={(e) => { sendSolicitud(); e.preventDefault() }} className="p-3" id="createUserForm">
 
             <h5>Tipo de usuario:</h5>
-            <select id='tipo-selector' className="form-select" onChange={() => hideOrShowInput()} defaultValue={0}>
+            <select id='tipo-selector' className="form-select" onChange={() => {hideOrShowInput()}} defaultValue={0}>
               <option disabled value={0}>Tipo de usuario</option>
               <option value={"user"}>USER</option>
               <option value={"mentor"}>MENTOR</option>
               <option value={"admin"}>ADMIN</option>
             </select>
 
+            <div id='link-area' className="hide mt-4">
+              <h5 className='mt-4'>Área de mentor:</h5>
+              <select id='link' className="form-select" defaultValue={0} onChange={onInputChange}>
+                <option disabled value={0}>Elegí un área para el mentor</option>
+                <option value={"BACKEND"}>Back-End</option>
+                <option value={"FRONTEND"}>Front-End</option>
+                <option value={"BD"}>Base de Datos</option>
+                <option value={"CRM"}>CRM</option>
+                <option value={"SALESFORCE"}>Saleforce</option>
+              </select>
+            </div>
+
             <div className="row">
               <div className="col-sm">
                 <h5 className='mt-4'>Nombre:</h5>
-                <input className="form-control i " placeholder="Ej:Juan" rows="1" name="nombre" value={nombre} onChange={onInputChange}></input>
+                <input id="nombre" className="form-control i " placeholder="Ej:Juan" rows="1" name="nombre" value={nombre} onChange={onInputChange}></input>
               </div>
               <div className="col-sm">
                 <h5 className='mt-4'>Apellido:</h5>
-                <input className="form-control i " placeholder="Ej:Ramirez" rows="1" name="apellido" value={apellido} onChange={onInputChange}></input>
+                <input id="apellido" className="form-control i " placeholder="Ej:Ramirez" rows="1" name="apellido" value={apellido} onChange={onInputChange}></input>
               </div>
             </div>
 
             <div className="row">
               <div className="col-sm">
                 <h5 className='mt-4'>Nombre de usuario:</h5>
-                <input className="form-control i " placeholder="Ej:JPerez" rows="1" name="username" value={username} onChange={onInputChange}></input>
+                <input id="username" className="form-control i " placeholder="Ej:JPerez" rows="1" name="username" value={username} onChange={onInputChange}></input>
               </div>
               <div className="col-sm">
                 <h5 className='mt-4'>Número de teléfono:</h5>
-                <input className="form-control i " placeholder="Ej:+54 9 1123867095" rows="1" name="phone" value={phone} onChange={onInputChange}></input>
+                <input id="phone" className="form-control i " placeholder="Ej:+54 9 1123867095" rows="1" name="phone" value={phone} onChange={onInputChange}></input>
               </div>
             </div>
 
             <h5 className='mt-4'>Mail:</h5>
-            <input className="form-control i " placeholder="juan.perez@gire.com" rows="1" name="email" value={email} onChange={onInputChange}></input>
+            <input id="mail" className="form-control i " placeholder="juan.perez@gire.com" rows="1" name="email" value={email} onChange={onInputChange}></input>
 
             <div className="row">
               <div className="col-sm">
@@ -153,11 +159,13 @@ export const CrearUsuario = () => {
           </form>
             <div className="d-flex my-4 mt-0">
               <button className='btn btn-outline-dark w-75 me-4' id="cancelBtnCR" onClick={() => navigate(-1)}>Cancelar</button>
-              <button className='btn btn-dark w-75 ms-4' id="createBtnCR" data-bs-toggle="modal" data-bs-target="#aprobSoli" >Crear</button>
+              <button className='btn btn-dark w-75 ms-4' id="createBtnCR" data-bs-toggle="modal" data-bs-target="#aprobSoli" onClick={() => setRole(document.getElementById('tipo-selector').value)}>Crear</button>
             </div>
         </div>
       </div>
-      <Modal accion="Crear" titulo="Confirmar creacion de usuario"  usuario={username} role={role} coso="Usuario" mail={email}/>
+      <Modal accion="Crear" titulo="Confirmar creacion de usuario" usuario={username} role={role} coso="Usuario" mail={email} sendUsuario = {sendUsuario} />
+      {/* Modal=({ accion,titulo,usuario,tipoSoli,descripcion,mail,plataforma,fechaExpir,serialLic,mentorAsign,adminAsign,
+        coso,soli,mensajeSerial,apiFetch,apiFetchAdmin,apiFetchRevocar, role }) => { */ }
     </>
   )
 }

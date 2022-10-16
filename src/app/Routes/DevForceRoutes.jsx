@@ -23,7 +23,7 @@ export const DevForceRoutes = () => {
         <Route path='/*' element={<Navigate to="/user" />} />
         <Route path='/Modal' element={<Modal/>} />
         <Route path='/ver-perfil' element={<ModificarUsuario/>} />
-        <Route path='/Crear-usuario' element={<CrearUsuario/>} />
+        <Route path='/crear-usuario' element={<CrearUsuario/>} />
       </Routes>
     </>
   )
